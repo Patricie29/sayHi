@@ -26,7 +26,7 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatPartner, 
         pusherClient.subscribe(toPusherKey(`chat:${chatId}`))  // the only thing with pusher is that it doesnt allow : semicolons so we created a helper function in the utilities  called toPusherKey
 
 
-        // now you have to say what needs to happen when there is a change in the icoming friend requests
+        // now you have to say what needs to happen when there is a change in the incoming friend requests
         const messageHandler = (messageData: Message) => {
             // we just want to add + 1 request to hsow in the icon in real time
             setOurMessages((prev) => [messageData, ...prev])  //you want to add the message to the beggining of the array because we already implemented flex-col-reverse so everything is already turned upside down
@@ -39,7 +39,6 @@ const Messages: FC<MessagesProps> = ({ initialMessages, sessionId, chatPartner, 
         return () => {
             pusherClient.unsubscribe(toPusherKey(`chat:${chatId}`))
             pusherClient.unbind('incoming-message', messageHandler)
-
         }
     })
 

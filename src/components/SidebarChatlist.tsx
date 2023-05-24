@@ -29,6 +29,10 @@ const SidebarChatlist: FC<SidebarChatlistProps> = ({ friends, sessionId }) => {
     // it will be initilized as an empty array so we can push any unseen messages coming during the period while the user is active on the page 
     const [unseenMessages, setUnseenMessages] = useState<Message[]>([])
 
+    //to better handle refreshing the page we will keep users in a state
+    const [activeChats, setActiveChats] = useState<User[]>(friends)
+
+
     // to find out if the path - the url - has been checked we will run useEffect 
     // we will run this useEffect everytime the pathname changes - that's why it's in the dependecies 
     useEffect(() => {
@@ -54,8 +58,9 @@ const SidebarChatlist: FC<SidebarChatlistProps> = ({ friends, sessionId }) => {
         // we will also subscribe to all of the person's friends
         pusherClient.subscribe(toPusherKey(`user:${sessionId}:friends`))
 
-        const newFriendHandler = () => {
-            router.refresh()
+        const newFriendHandler = (newFriend: User) => {
+            // router.refresh()  //this doesnt work properly
+            setActiveChats((prev) => [...prev, newFriend])
         }
 
         const chatHandler = (messageData: ExtendedMessage) => {
@@ -88,7 +93,7 @@ const SidebarChatlist: FC<SidebarChatlistProps> = ({ friends, sessionId }) => {
     return <ul role='list' className='max-h-[25rem] overflow-y-auto space-y-1 -mx-2'>
 
         {/* friends is a props that we pass from layout */}
-        {friends.sort().map((oneFriend) => {
+        {activeChats.sort().map((oneFriend) => {
             // first we wanna know how many unseen messages there are for this particular friend
             const unseenMessagesCount = unseenMessages.filter((oneUnseenMsg) => {
                 // you only want to display unseen messaged for this particular friend. in the unseenMessages state you have ALL unseen messages no matter with what friend, like this you specify you want to see unseen messages for THIS particular person
@@ -98,7 +103,7 @@ const SidebarChatlist: FC<SidebarChatlistProps> = ({ friends, sessionId }) => {
             return <li key={oneFriend.id}>
                 {/* we do a tag instead of Link because what we actually want is a hard refresh to get the latest messages this friend has sent everytime you visit th e page */}
                 {/* a tag compare to Link tag forces the hard refresh that we want  */}
-                <a href={`/dashboard/chat/${chatHrefConstructor(sessionId, oneFriend.id)}`} className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex items-start gap-x-3 rounded-medium p-2 text-sm leading-6 font-semibold'>{oneFriend.name} {unseenMessagesCount > 0 ? (
+                <a href={`/dashboard/chat/${chatHrefConstructor(sessionId, oneFriend.id)}`} className='text-gray-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:border-slate-800 dark:hover:bg-slate-800  hover:bg-gray-50 group flex items-start gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'>{oneFriend.name} {unseenMessagesCount > 0 ? (
                     <div className='bg-indigo-600 font-medium text-xs text-white w-4 h-4 rounded-full flex justify-center items-center'>
                         {unseenMessagesCount}
                     </div>

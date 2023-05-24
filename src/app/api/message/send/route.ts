@@ -69,12 +69,12 @@ export async function POST(req: Request) {
         // here we notify all connected clients to the chat room 
         pusherServer.trigger(toPusherKey(`chat:${chatId}`),
             'incoming-message', //again this needs to match with the client side name of a function 
-            messageData //this is what is recieved as prop in the  Messages components in a function messageHandler 
+            message //this is what is recieved as prop in the  Messages components in a function messageHandler 
         )
 
         // showing notification when this user recieves any message from any chat
         pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), 'new_message', {
-            ...messageData,
+            ...message,
             senderImg: sender.image,
             senderName: sender.name
         })
@@ -91,7 +91,5 @@ export async function POST(req: Request) {
             return new Response(error.message, { status: 500 })
         }
         return new Response('Internal server error', { status: 500 })
-
-
     }
 }

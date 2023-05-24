@@ -84,7 +84,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({ sessionId, incomingFriendRequ
     return <>
         {/* if there are no friends requests */}
         {friendRequests.length === 0 ? (
-            <p className='text-sm text-zinc-500'>Nothing to show here...</p>
+            <p className='text-sm text-zinc-500 dark:text-zinc-300'>Nothing to show here...</p>
         ) : (
             //  since it's array we can map through and get back individual id and email
             // this is how our 'schema' looks, hence we use senderId and senderEmail - we didn;t make it up
@@ -93,21 +93,23 @@ const FriendRequests: FC<FriendRequestsProps> = ({ sessionId, incomingFriendRequ
             // senderEmail: string | null | undefined
             // }
             friendRequests.map((oneRequest) => {
-                return <div key={oneRequest.senderId} className='flex gap-4 items-center'>
-                    {/* here we select that we want to display UserPlus icon */}
-                    <Icons.UserPlus className='text-black' />
-                    {/* why senderEmail?  see note up */}
-                    <p className='font-medium text-lg'>{oneRequest.senderEmail}</p>
-                    <button className='w-8 h-8 bg-indigo-600 hover:bg-indigo-700 grid place-items-center rounded-full transition hover:shadow-md' aria-label='accept friend' onClick={() => acceptFriendRequest(oneRequest.senderId)}>
-                        {/* Check is lucide icon */}
-                        <Check className='font-semibold text-white w-3/4 h-3/4' />
-                    </button>
+                return <>
+                    <div key={oneRequest.senderId} className='flex gap-4 items-center'>
+                        {/* here we select that we want to display UserPlus icon */}
+                        <Icons.UserPlus className='text-black dark:text-zinc-300' />
+                        {/* why senderEmail?  see note up */}
+                        <p className='font-medium text-lg'>{oneRequest.senderEmail}</p>
+                        <button className='w-8 h-8 bg-indigo-600 hover:bg-indigo-700 grid place-items-center rounded-full transition hover:shadow-md' aria-label='accept friend' onClick={() => acceptFriendRequest(oneRequest.senderId)}>
+                            {/* Check is lucide icon */}
+                            <Check className='font-semibold text-white w-3/4 h-3/4' />
+                        </button>
 
-                    <button className='w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md' aria-label='deny friend' onClick={() => denyFriendRequest(oneRequest.senderId)}>
-                        {/* you have to pass the senderId because the function expects the id */}
-                        <X className='font-semibold text-white w-3/4 h-3/4' />
-                    </button>
-                </div>
+                        <button className='w-8 h-8 bg-red-600 hover:bg-red-700 grid place-items-center rounded-full transition hover:shadow-md' aria-label='deny friend' onClick={() => denyFriendRequest(oneRequest.senderId)}>
+                            {/* you have to pass the senderId because the function expects the id */}
+                            <X className='font-semibold text-white w-3/4 h-3/4' />
+                        </button>
+                    </div>
+                </>
             })
         )}
     </>

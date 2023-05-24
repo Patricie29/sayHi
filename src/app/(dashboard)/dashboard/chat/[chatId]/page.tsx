@@ -67,15 +67,18 @@ const page = async ({ params }: PageProps) => {
 
     //this is how we check who has what id. so if the currently logged in user has same id as userId1 it's the friend's id
     const chatPartnerId = user.id === userId1 ? userId2 : userId1
+
     //now we need to get their email and name
-    const chatPartner = (await database.get(`user:${chatPartnerId}`)) as User
+    // const chatPartner = (await database.get(`user:${chatPartnerId}`)) as User
+    const chatPartnerRaw = await fetchRedis('get', `user:${chatPartnerId}`) as string
+    const chatPartner = JSON.parse(chatPartnerRaw) as User
 
     const initialMessages = await getChatMessages(chatId)
 
 
 
     return <div className='flex-1 justify-between flex flex-col h-full max-h-[calc(100vh-6rem)]'>
-        <div className='flex sm:items-center justify-between py-3 border-b-2 border-gray-200'>
+        <div className='flex sm:items-center justify-between py-3 border-b-2 border-gray-200 dark:border-slate-700'>
             <div className='relative flex items-center space-x-4'>
                 <div className='relative'>
 
@@ -87,9 +90,9 @@ const page = async ({ params }: PageProps) => {
                 <div className='flex flex-col leading-tight'>
 
                     <div className='ext-xl flex items-center'>
-                        <span className='text-gray-700 mr-3 font-semibold'>{chatPartner.name}</span>
+                        <span className='text-gray-700 mr-3 font-semibold dark:text-zinc-300'>{chatPartner.name}</span>
                     </div>
-                    <span className='text-sm text-gray-600'>{chatPartner.email}</span>
+                    <span className='text-sm text-gray-600 dark:text-zinc-400'>{chatPartner.email}</span>
 
                 </div>
             </div>

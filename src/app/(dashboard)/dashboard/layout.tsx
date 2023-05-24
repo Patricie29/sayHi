@@ -12,6 +12,7 @@ import { getFriendsByUserId } from '@/helpers/get-friends-by-user-id'
 import SidebarChatlist from '@/components/SidebarChatlist'
 import MobileChatLayout from '@/components/MobileChatLayout'
 import { SidebarOption } from '@/types/typings'
+import ThemeToggle from '@/components/ui/ThemeToggle'
 
 interface LayoutProps {
     children: ReactNode
@@ -51,18 +52,22 @@ const layout = async ({ children }: LayoutProps) => {
             <MobileChatLayout friends={friends} session={session} unseenRequestCount={initialUnseenRequestCount} sidebarOptions={sidebarOption} />
         </div>
 
-        <div className='hidden md:flex max-w-xs grow w-full h-full flex-col gap-y-5 border-r border-gray-200 overflow-y-auto bg-white px-6'>
-            <Link href='/dashboard' className='flex h-16 shrink-0 items-center'> <Icons.Logo className='h-8 w-auto text-indigo-600' /></Link>
+        <div className='hidden md:flex max-w-xs grow w-full h-full flex-col gap-y-5 border-r border-gray-200 overflow-y-auto bg-white px-6 dark:bg-slate-900 dark:border-slate-800'>
+            <div className='flex justify-between items-center'>
+                <Link href='/dashboard' className='flex h-16 shrink-0 items-center'> <Icons.Logo className='h-8 w-auto text-indigo-600 dark:text-zinc-300' /></Link>
+                <ThemeToggle />
+            </div>
+
             {/* we do not want to display chats if you actually dont have any friends, so you can conditionally render this div */}
             {friends.length ? (
-                <div className='text-xs font-semibold leading-6 text-gray-400'>Your chats</div>
+                <div className='text-xs font-semibold leading-6 text-gray-400  dark:text-zinc-300'>Your chats</div>
             ) : null}
             <nav className='flex flex-1 flex-col'>
                 <ul role='list' className='flex flex-1 flex-col gap-y-7'>
                     {/* here we render the chats what user has  and because there will be interaction with the user you need to render is as client side so we create a different client side component for that*/}
                     <li> <SidebarChatlist friends={friends} sessionId={session.user.id} /> </li>
                     <li>
-                        <div className='text-xs font-semibold leading-6 text-gray-400'> Overview</div>
+                        <div className='text-xs font-semibold leading-6 text-gray-400 dark:text-zinc-300'>Overview</div>
                         <ul role='list' className='-mx-2 mt-2 space-y-1'>
 
                             {/* here we map through the option that we set on top of this page */}
@@ -71,8 +76,9 @@ const layout = async ({ children }: LayoutProps) => {
 
                                 return (
                                     <li key={oneOption.id}>
-                                        <Link href={oneOption.href} className='text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold'>
-                                            <span className='text-gray-400 border-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 flex w-6 h-6 shrink-0 items-center justify-center rounded-lg font-medium bg-white border text-[0.625rem]'>
+                                        <Link href={oneOption.href} className='text-gray-700 dark:text-zinc-300 hover:text-indigo-600 dark:hover:border-slate-800 dark:hover:bg-slate-800  hover:bg-gray-50 group flex gap-3 rounded-md p-2 text-sm leading-6 font-semibold'>
+                                            <span className='text-gray-400 border-gray-400 group-hover:border-indigo-600 group-hover:text-indigo-600 flex w-6 h-6 shrink-0 items-center justify-center rounded-lg font-medium bg-white border text-[0.625rem]
+                                            dark:bg-slate-900 dark:hover:border-zinc-300 dark:group-hover:border-zinc-300 dark:group-hover:text-zinc-300'>
                                                 <Icon className='h-4 w-4' />
                                             </span>
                                             <span className='truncate'>{oneOption.name}</span>
@@ -91,9 +97,9 @@ const layout = async ({ children }: LayoutProps) => {
                     {/* YOUR PROFILE DOWN AT THE BOTTOM OF THE PAGE */}
 
                     <li className='-mx-6 mt-auto flex items-center'>
-                        <div className='flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900'>
+                        <div className='flex flex-1 items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 dark:text-zinc-300'>
                             {/* here will be the images, by default with nextjs images are absolute hence the class relative is very important */}
-                            <div className='relative h-8 w-8 bg-gray-50'>
+                            <div className='relative h-8 w-8 bg-gray-50 dark:bg-slate-900'>
                                 {/* Image is nextJS thing, it's like regular image tag in html, but you need to declare element above it as relative - very important!  */}
                                 <Image fill alt='Your profile picture' referrerPolicy='no-referrer' className='rounded-full' src={session.user.image || ''} />
                             </div>
@@ -111,11 +117,11 @@ const layout = async ({ children }: LayoutProps) => {
                     </li>
                 </ul>
             </nav>
-        </div>
-        <aside className='max-h-screen max-w-7xl mx-auto px-4 lg:px-8 sm:px-6 py-16 md:py-12 w-full'>
+        </div >
+        <aside className='max-h-screen max-w-7xl mx-auto px-4 lg:px-8 sm:px-6 py-16 md:py-12 w-full dark:bg-slate-950'>
             {children}
         </aside>
-    </div>
+    </div >
 }
 
 export default layout

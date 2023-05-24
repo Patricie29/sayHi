@@ -35,15 +35,15 @@ const page = async () => {
     )
 
     return <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="font-bold text-5xl mb-8">Recent Chats</h1>
+        <h1 className="font-bold text-5xl mb-8 dark:text-zinc-200">Recent Chats</h1>
 
         {friendsWithLastMessage.length === 0 ? (
             <p className="text-sm text-zinc-500">Nothing to show here...</p>
         ) : (
             friendsWithLastMessage.map((oneFriend) => {
-                return <div key={oneFriend.id} className="relative bg-zinc-50 border border-zinc-200 p-3 rounded-md">
+                return <div key={oneFriend.id} className="relative dark:bg-slate-900 dark:border-zinc-600 bg-zinc-50 border border-zinc-200 p-3 rounded-md">
                     <div className='absolute right-4 inset-y-0 flex items-center'>
-                        <ChevronRight className="h-7 w-7 text-zinc-400" />
+                        <ChevronRight className="h-7 w-7 text-zinc-400  dark:text-zinc-300" />
                     </div>
                     <Link href={`/dashboard/chat/${chatHrefConstructor(session.user.id, oneFriend.id)}`} className="relative sm:flex">
                         <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
@@ -53,8 +53,8 @@ const page = async () => {
                         </div>
 
                         <div>
-                            <h4 className="text-lg font-semibold">{oneFriend.name}</h4>
-                            <p className="mt-1 max-w-md">
+                            <h4 className="text-lg font-semibold  dark:text-zinc-200">{oneFriend.name}</h4>
+                            <p className="mt-1 max-w-md  dark:text-zinc-200">
                                 <span className="text-zinc-400"> {oneFriend.lastMessage.senderId === session.user.id ? 'You' : ' '} </span>
                                 {oneFriend.lastMessage.text}
                             </p>

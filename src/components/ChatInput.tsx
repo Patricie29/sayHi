@@ -42,8 +42,8 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
     }
 
 
-    return <div className='border-t border-gray-200 px-4 pt-4 mb-2 sm:mb-0'>
-        <div className='relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600'>
+    return <div className='border-t border-gray-200 dark:border-slate-700 px-4 pt-4 mb-2 sm:mb-0'>
+        <div className='relative flex-1 overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-600  dark:focus-within:ring-slate-700 dark:ring-zinc-400'>
             <TextareaAutosize ref={textareaRef}
                 onKeyDown={(event) => {
                     if (event.key === 'Enter' && !event.shiftKey) {
@@ -55,7 +55,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
                 value={input}
                 onChange={(event) => setInput(event.target.value)}
                 placeholder={`Message ${chatPartner.name}`}
-                className='block w-full resize-none border-0 bg-transparent text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6'
+                className='block w-full resize-none border-0 bg-transparent text-gray-900 dark:text-zinc-400 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6'
             />
 
             <div className='py-2' aria-hidden='true' onClick={() => textareaRef.current?.focus()}>
@@ -66,7 +66,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
 
             <div className='absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2'>
                 <div className='flex-shrink-0'>
-                    <Button onClick={sendMessage} type='submit' isLoading={isLoading}>Send</Button>
+                    <Button onClick={sendMessage} type='submit' isLoading={isLoading} className='dark:hover:bg-slate-300'>Send</Button>
                 </div>
             </div>
         </div>
