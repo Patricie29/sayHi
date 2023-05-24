@@ -55,8 +55,8 @@ export async function POST(req: Request) {
         // notifying added user
         // this will refresh a page for a user that sent the freind request to see his friends request has been accepted 
         await Promise.all([
-            pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new_friend', { user }),
-            pusherServer.trigger(toPusherKey(`user:${session.user.id}:friends`), 'new_friend', { friend }),
+            pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new_friend', user),
+            pusherServer.trigger(toPusherKey(`user:${session.user.id}:friends`), 'new_friend', friend),
 
             // if everything is alright then you can move to this line and actually add a friend to your list and accept the request
             //you want to add that person to our database using database.sadd()
@@ -71,8 +71,6 @@ export async function POST(req: Request) {
             database.srem(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
 
         ])
-
-
 
         return new Response('OK')
 

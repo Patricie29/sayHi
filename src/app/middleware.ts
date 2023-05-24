@@ -38,7 +38,8 @@ export default withAuth(
             return NextResponse.redirect(new URL('/login', req.url))
         }
 
-        if (currentPath === '/') {  // so this matches with our routing structure and if there is just / in the url we redirect them to /dashboard as that is our home page
+
+        if (currentPath === '/' && isAuthenticated) {  // so this matches with our routing structure and if there is just / in the url we redirect them to /dashboard as that is our home page
             return NextResponse.redirect(new URL('/dashboard', req.url))
         }
     },
