@@ -6,6 +6,8 @@ import { signOut } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
 import { Loader2, LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { destroyCookie } from 'nookies'
+
 
 
 //because on this button we will add some seperate classes in layout, we need to extend this prop

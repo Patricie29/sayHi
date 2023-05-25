@@ -38,9 +38,6 @@ const Login: FC = () => {
                         ) : (
                             <Image referrerPolicy='no-referrer' src={logoDark} alt='logoDark' className='w-3/4 h-3/4' />
                         )}
-                        <div>
-                        </div>
-
 
                         <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-zinc-300'>
                             Sign in to your account

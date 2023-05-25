@@ -13,6 +13,7 @@ import SidebarChatlist from './SidebarChatlist'
 import FriendRequestsSidebarOption from './FriendRequestsSidebarOption'
 import { Session } from 'next-auth'
 import { SidebarOption } from '@/types/typings'
+import ThemeToggle from './ui/ThemeToggle'
 
 interface MobileChatLayoutProps {
     friends: User[]
@@ -33,11 +34,16 @@ const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebar
     return (
         <div className='fixed bg-zinc-50 border-b border-zinc-200 top-0 inset-x-0 py-2 px-4 dark:bg-slate-900 dark:border-slate-800'>
             <div className='w-full flex justify-between items-center'>
-                <Link
-                    href='/dashboard'
-                    className={buttonVariants({ variant: 'ghost' })}>
-                    <Icons.Logo className='h-6 w-auto text-indigo-600 dark:text-zinc-300' />
-                </Link>
+                <div className='w-full flex justify-start items-center'>
+
+                    <Link
+                        href='/dashboard'
+                        className={buttonVariants({ variant: 'ghost' })}>
+                        <Icons.Logo className='h-6 w-auto text-indigo-600 dark:text-zinc-300' />
+                    </Link>
+                    <ThemeToggle />
+                </div>
+
                 <Button onClick={() => setOpen(true)} className='gap-4'>
                     Menu <Menu className='h-6 w-6' />
                 </Button>
