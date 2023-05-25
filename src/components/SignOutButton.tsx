@@ -5,6 +5,7 @@ import Button from './ui/Button'
 import { signOut } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
 import { Loader2, LogOut } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 
 //because on this button we will add some seperate classes in layout, we need to extend this prop
@@ -15,11 +16,13 @@ interface SignOutButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const SignOutButton: FC<SignOutButtonProps> = ({ ...props }) => {
     const [isSigningOut, setIsSigningOut] = useState<boolean>(false)
+    const router = useRouter()
 
     const signOutHandler = async () => {
         setIsSigningOut(true)
         try {
             await signOut()
+            router.push('/login')
         } catch (error) {
             toast.error('There was a problem signing out.')
         } finally {

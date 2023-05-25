@@ -4,9 +4,16 @@ import Button from '@/components/ui/Button'
 import { FC, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
+import logoLight from '../../../images/logoLight.png'
+import logoDark from '../../../images/logoDark.png'
+import Image from 'next/image'
+import { useTheme } from 'next-themes'
+
 
 const Login: FC = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const { theme, setTheme } = useTheme()
+
 
     const loginWithGoogle = async () => {
         setIsLoading(true)
@@ -23,8 +30,18 @@ const Login: FC = () => {
     return (
         <>
             <div className='flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-'>
-                <div className='w-full flex flex-col items-center max-w-md space-y-8 dark:border dark:border-slate-500 py-10'>
+                <div className='w-full flex flex-col items-center max-w-md space-y-8 dark:border dark:bg-black dark:border-slate-500 py-10'>
+
                     <div className='flex flex-col items-center gap-8'>
+                        {theme === 'light' ? (
+                            <Image referrerPolicy='no-referrer' src={logoLight} alt='logoLight' className='w-3/4 h-3/4' />
+                        ) : (
+                            <Image referrerPolicy='no-referrer' src={logoDark} alt='logoDark' className='w-3/4 h-3/4' />
+                        )}
+                        <div>
+                        </div>
+
+
                         <h2 className='mt-6 text-center text-3xl font-bold tracking-tight text-gray-900 dark:text-zinc-300'>
                             Sign in to your account
                         </h2>
@@ -67,7 +84,7 @@ const Login: FC = () => {
                         Google
                     </Button>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
